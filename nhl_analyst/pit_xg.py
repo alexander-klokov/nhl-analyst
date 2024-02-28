@@ -53,10 +53,8 @@ def get_proportion(df):
 def plot_goalsFor_vs_xg():
     df_top = pd.read_csv('top_8_by_xg.csv')
     df_top = df_top.sort_values(by='goalsFor', ascending=False)
-    df_top.reset_index(drop=True, inplace=True)
-
-    print(df_top)
-    teams = ['DAL', 'COL', 'NJD', 'TOR', 'EDM', 'CAR', 'PIT', 'LAK']
+ 
+    teams = df_top['team'].astype(str).values
 
     # fetch team stats
     for team in teams:
@@ -79,9 +77,9 @@ def plot_goalsFor_vs_xg():
     df_top['p'] = proportions
     df_top = df_top.sort_values(by='p', ascending=False)
 
-    colors = ['black'] * len(df_top)
+    colors = ['blue'] * len(df_top)
     highlight_index = -1
-    colors[highlight_index] = 'blue'
+    colors[highlight_index] = 'black'
 
     df_top.plot(x='team', y='p', kind='bar', color=colors, alpha=0.8) 
     
