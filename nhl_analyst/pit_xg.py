@@ -1,9 +1,8 @@
-import pandas as pd
-import requests
-import csv
-import matplotlib.pyplot as plt
 import os
-import numpy as np
+import requests
+
+import pandas as pd
+import matplotlib.pyplot as plt
 
 base_url = 'https://moneypuck.com/moneypuck/playerData/careers/gameByGame/regular/teams/'
 url_teams = 'https://moneypuck.com/moneypuck/playerData/seasonSummary/2023/regular/teams.csv'
@@ -79,6 +78,15 @@ def plot_goalsFor_vs_xg():
 
     df_top['p'] = proportions
     df_top = df_top.sort_values(by='p', ascending=False)
+
+    colors = ['black'] * len(df_top)
+    highlight_index = -1
+    colors[highlight_index] = 'blue'
+
+    df_top.plot(x='team', y='p', kind='bar', color=colors, alpha=0.8) 
+    
+    plt.grid(True)
+    plt.show()
 
     print(df_top)
 
