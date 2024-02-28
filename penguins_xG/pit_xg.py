@@ -37,7 +37,7 @@ def get_top_by_xg():
     df = pd.read_csv('teams.csv')
     df = df[df['situation'] == SITUATION]
     df_sorted = df.sort_values(by='xGoalsFor', ascending=False)
-    df_sorted = df_sorted[['team', 'xGoalsFor', 'goalsFor']].head(8)
+    df_sorted = df_sorted[['team', 'xGoalsFor', 'goalsFor']].head(32)
     df_sorted.to_csv('top_8_by_xg.csv', index=False)
 
 def get_proportion(df):
