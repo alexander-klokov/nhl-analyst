@@ -1,70 +1,60 @@
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 
 import metrics
 
-from pit_xg_settings import AXIS_X, AXIS_Y, url_base, url_teams
+from pit_xg_config import AXIS_X, AXIS_Y
+
 from utils.fetch_nhl_data import fetch_nhl_data
+from utils.generate_filename import generate_filename_team, generate_filename_teams_all
+from utils.generate_url import generate_url_teams_all, generate_url_team
+from utils.get_top_n_teams import get_top_n_teams
+from utils.plot_teams import plot_teams
+
+url_teams_all = generate_url_teams_all()
+file_teams_all = generate_filename_teams_all()
 
 SITUATION='5on5'
+NTOP = 32
 
+def init():
+    if not os.path.exists('data'):
+        os.makedirs('data')
 
-def get_top_by_xg():
-    df = pd.read_csv('teams.csv')
-    df = df[df['situation'] == SITUATION]
-    df_sorted = df.sort_values(by='xGoalsFor', ascending=False)
-    df_sorted = df_sorted[['team', 'xGoalsFor', 'goalsFor']].head(32)
-    df_sorted.to_csv('top_8_by_xg.csv', index=False)
-
-def get_proportion(df):
-    x = df[AXIS_X].to_numpy()
-    y = df[AXIS_Y].to_numpy()
-       
-    points_above_line = sum(y > x)
-    total_points = len(y)
-    proportion_above_line = points_above_line / total_points
-
-    return round(proportion_above_line, 2)
-
-def plot_goalsFor_vs_xg():
-    df_top = pd.read_csv('top_8_by_xg.csv')
-    df_top = df_top.sort_values(by='goalsFor', ascending=False)
+def get_metric_goal_rate():
  
-    teams = df_top['team'].astype(str).values
-
-    # fetch team stats
-    for team in teams:
-        url = url_base + team + '.csv'
-        fetch_nhl_data(url, team + '.csv')
-
+    # 'goalRate' - the metric to calculate
     goal_rates = []
 
-    # plot team stats
+    # get top N teams
+    df_top_n = get_top_n_teams(NTOP, situation=SITUATION, criterion=AXIS_Y)
+  
+    # handle teams
+    teams = df_top_n['team'].astype(str).values
     for team in teams:
-       df = pd.read_csv(team + '.csv')
-       df = df[(df['season'] >= 2023) & (df['situation'] == SITUATION)]
+        url_team = generate_url_team(team)
+        filename_team = generate_filename_team(team)
 
-       goal_rate = metrics.get_goal_rate(df)
+        fetch_nhl_data(url_team, filename_team)
 
-       goal_rates.append(goal_rate)
+        df = pd.read_csv(filename_team)
+        df = df[(df['season'] >= 2023) & (df['situation'] == SITUATION)]
 
-    df_top['goalRate'] = goal_rates
-    df_top = df_top.sort_values(by='goalRate', ascending=False)
+        goal_rate = metrics.get_goal_rate(df)
 
-    colors = ['blue'] * len(df_top)
-    highlight_index = -1
-    colors[highlight_index] = 'black'
+        goal_rates.append(goal_rate)
 
-    df_top.plot(x='team', y='goalRate', kind='bar', color=colors, alpha=0.8) 
-    
-    plt.grid(True)
-    plt.show()
+    # 
+    df_top_n['goalRate'] = goal_rates
+    df_with_goal_rate = df_top_n.sort_values(by='goalRate', ascending=False)
 
-    print(df_top)
+    print(df_with_goal_rate)
+    plot_teams(df_with_goal_rate)
 
 if __name__ == '__main__':
-    fetch_nhl_data(url_teams, 'teams.csv')
-    get_top_by_xg()
-    plot_goalsFor_vs_xg()
+    init()
+    fetch_nhl_data(url_teams_all, file_teams_all)
+    get_metric_goal_rate()
 
 

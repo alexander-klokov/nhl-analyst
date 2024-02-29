@@ -1,7 +1,7 @@
 import pandas as pd
 
 import metrics
-from pit_xg_settings import AXIS_X, AXIS_Y
+from pit_xg_config import AXIS_X, AXIS_Y
 
 # goal rate 0.5
 data_05 = {

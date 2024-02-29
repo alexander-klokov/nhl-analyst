@@ -2,7 +2,7 @@ run:
 	python3 -m pit_xg
 
 clean:
-	rm *.csv
+	rm -rf data
 
 test:
 	pytest
