@@ -1,5 +1,8 @@
+run:
+	python3 pit_xg.py
+
 clean:
 	rm *.csv
 
-pit:
-	python3 pit_xg.py
+test:
+	pytest

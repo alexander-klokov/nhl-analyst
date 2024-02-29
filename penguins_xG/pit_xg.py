@@ -4,13 +4,11 @@ import requests
 import pandas as pd
 import matplotlib.pyplot as plt
 
-base_url = 'https://moneypuck.com/moneypuck/playerData/careers/gameByGame/regular/teams/'
-url_teams = 'https://moneypuck.com/moneypuck/playerData/seasonSummary/2023/regular/teams.csv'
+import metrics
+from pit_xg_settings import AXIS_X, AXIS_Y, url_base, url_teams
 
-AXIS_X = 'xGoalsFor'
-AXIS_Y = 'goalsFor'
+
 SITUATION='5on5'
-
 
 def fetch_data(url, fileName):
 
@@ -58,30 +56,28 @@ def plot_goalsFor_vs_xg():
 
     # fetch team stats
     for team in teams:
-        url = base_url + team + '.csv'
+        url = url_base + team + '.csv'
         fetch_data(url, team + '.csv')
 
-    proportions = []
+    goal_rates = []
 
     # plot team stats
     for team in teams:
        df = pd.read_csv(team + '.csv')
        df = df[(df['season'] >= 2023) & (df['situation'] == SITUATION)]
 
-       proportion = get_proportion(df)
+       goal_rate = metrics.get_goal_rate(df)
 
-       print(team, ':', proportion)
+       goal_rates.append(goal_rate)
 
-       proportions.append(proportion)
-
-    df_top['p'] = proportions
-    df_top = df_top.sort_values(by='p', ascending=False)
+    df_top['goalRate'] = goal_rates
+    df_top = df_top.sort_values(by='goalRate', ascending=False)
 
     colors = ['blue'] * len(df_top)
     highlight_index = -1
     colors[highlight_index] = 'black'
 
-    df_top.plot(x='team', y='p', kind='bar', color=colors, alpha=0.8) 
+    df_top.plot(x='team', y='goalRate', kind='bar', color=colors, alpha=0.8) 
     
     plt.grid(True)
     plt.show()
