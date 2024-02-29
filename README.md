@@ -1,6 +1,4 @@
-# Project Name
-
-NHL Data Science Projects
+# NHL Data Science Projects
 
 ## About
 
