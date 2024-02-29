@@ -10,7 +10,7 @@ from utils.generate_url import generate_url_teams_all, generate_url_team
 from utils.get_top_n_teams import get_top_n_teams
 from utils.plot_teams import plot_teams
 from utils.plot_table import plot_table
-
+from utils.get_metric_timeline import get_metric_timeline
 
 url_teams_all = generate_url_teams_all()
 file_teams_all = generate_filename_teams_all()
@@ -81,13 +81,22 @@ def get_metric_goal_rate():
     df_top_n['goalRate'] = goal_rates
     df_with_goal_rate = df_top_n.sort_values(by='goalRate', ascending=False)
 
-    print(df_with_goal_rate)
     plot_teams(df_with_goal_rate)
+
+def get_metric_timeline_leaders():
+    teams = ['DET', 'VGK', 'VAN', 'PIT']
+    get_metric_timeline(teams)
+
+def get_metric_timeline_wildcard():
+    teams = ['DET', 'TBL', 'WSH', 'NJD', 'PIT']
+    get_metric_timeline(teams)
 
 if __name__ == '__main__':
     init()
     get_top_n_by_xg()
     get_top_n_by_goal()
     get_metric_goal_rate()
+    get_metric_timeline_leaders()
+    get_metric_timeline_wildcard()
 
 
