@@ -1,10 +1,8 @@
 import os
 import pandas as pd
-import matplotlib.pyplot as plt
 
 import metrics
-
-from pit_xg_config import AXIS_X, AXIS_Y
+from penguins_xg_config import AXIS_Y
 
 from utils.fetch_nhl_data import fetch_nhl_data
 from utils.generate_filename import generate_filename_team, generate_filename_teams_all
@@ -19,12 +17,14 @@ SITUATION='5on5'
 NTOP = 32
 
 def init():
+    # fetch teams stats
     if not os.path.exists('data'):
         os.makedirs('data')
+    fetch_nhl_data(url_teams_all, file_teams_all)
 
 def get_metric_goal_rate():
  
-    # 'goalRate' - the metric to calculate
+    # 'goalRate' - the metric to calculate 
     goal_rates = []
 
     # get top N teams
@@ -54,7 +54,6 @@ def get_metric_goal_rate():
 
 if __name__ == '__main__':
     init()
-    fetch_nhl_data(url_teams_all, file_teams_all)
     get_metric_goal_rate()
 
 

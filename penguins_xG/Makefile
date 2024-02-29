@@ -1,5 +1,5 @@
 run:
-	python3 -m pit_xg
+	python3 -m penguins_xg
 
 clean:
 	rm -rf data
