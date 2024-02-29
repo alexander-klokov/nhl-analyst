@@ -1,35 +1,13 @@
-import os
-import requests
-
 import pandas as pd
 import matplotlib.pyplot as plt
 
 import metrics
-from pit_xg_settings import AXIS_X, AXIS_Y, url_base, url_teams
 
+from pit_xg_settings import AXIS_X, AXIS_Y, url_base, url_teams
+from utils.fetch_nhl_data import fetch_nhl_data
 
 SITUATION='5on5'
 
-def fetch_data(url, fileName):
-
-    if os.path.exists(fileName):
-        print(f"skip fetch: {fileName}")
-        return
-
-    response = requests.get(url)
-
-    # Check if the request was successful
-    if response.status_code == 200:
-        # Parse CSV data
-        csv_data = response.text
-    
-        # Write CSV data to a file
-        with open(fileName, 'w', newline='') as f:
-            f.write(csv_data)
-        
-        print(f"Data has been fetched and written to {fileName}")
-    else:
-        print("Failed to fetch data. Status code:", response.status_code)
 
 def get_top_by_xg():
     df = pd.read_csv('teams.csv')
@@ -57,7 +35,7 @@ def plot_goalsFor_vs_xg():
     # fetch team stats
     for team in teams:
         url = url_base + team + '.csv'
-        fetch_data(url, team + '.csv')
+        fetch_nhl_data(url, team + '.csv')
 
     goal_rates = []
 
@@ -85,7 +63,7 @@ def plot_goalsFor_vs_xg():
     print(df_top)
 
 if __name__ == '__main__':
-    fetch_data(url_teams, 'teams.csv')
+    fetch_nhl_data(url_teams, 'teams.csv')
     get_top_by_xg()
     plot_goalsFor_vs_xg()
 
