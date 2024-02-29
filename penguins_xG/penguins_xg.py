@@ -31,12 +31,26 @@ def init():
 
 def get_top_n_by_xg():
 
+    criterion = 'xGoalsFor'
     filename = 'figs/top_n_by_xg.png'
+    n = 8
 
-    df_top_n = get_top_n_teams(8, situation=SITUATION, criterion=AXIS_X)
-    df_top_n = df_top_n[['team', AXIS_X]]
+    df_top_n = get_top_n_teams(n, situation=SITUATION, criterion=criterion)
+    df_top_n = df_top_n[['team', criterion]]
 
     plot_table(df_top_n, filename)
+
+def get_top_n_by_goal():
+
+    criterion = 'goalsFor'
+    filename = 'figs/top_n_by_goal.png'
+    n = 32
+
+    df_top_n = get_top_n_teams(n, situation=SITUATION, criterion=criterion)
+    df_top_n = df_top_n[['team', criterion]]
+
+    plot_table(df_top_n, filename)
+
 
 def get_metric_goal_rate():
  
@@ -71,6 +85,7 @@ def get_metric_goal_rate():
 if __name__ == '__main__':
     init()
     get_top_n_by_xg()
+    get_top_n_by_goal()
     get_metric_goal_rate()
 
 
