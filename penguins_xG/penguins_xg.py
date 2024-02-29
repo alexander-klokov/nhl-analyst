@@ -2,13 +2,15 @@ import os
 import pandas as pd
 
 import metrics
-from penguins_xg_config import AXIS_Y
+from penguins_xg_config import AXIS_X, AXIS_Y
 
 from utils.fetch_nhl_data import fetch_nhl_data
 from utils.generate_filename import generate_filename_team, generate_filename_teams_all
 from utils.generate_url import generate_url_teams_all, generate_url_team
 from utils.get_top_n_teams import get_top_n_teams
 from utils.plot_teams import plot_teams
+from utils.plot_table import plot_table
+
 
 url_teams_all = generate_url_teams_all()
 file_teams_all = generate_filename_teams_all()
@@ -17,10 +19,24 @@ SITUATION='5on5'
 NTOP = 32
 
 def init():
-    # fetch teams stats
+
     if not os.path.exists('data'):
         os.makedirs('data')
+
+    if not os.path.exists('figs'):
+        os.makedirs('figs')
+
+    # fetch teams stats
     fetch_nhl_data(url_teams_all, file_teams_all)
+
+def get_top_n_by_xg():
+
+    filename = 'figs/top_n_by_xg.png'
+
+    df_top_n = get_top_n_teams(8, situation=SITUATION, criterion=AXIS_X)
+    df_top_n = df_top_n[['team', AXIS_X]]
+
+    plot_table(df_top_n, filename)
 
 def get_metric_goal_rate():
  
@@ -54,6 +70,7 @@ def get_metric_goal_rate():
 
 if __name__ == '__main__':
     init()
+    get_top_n_by_xg()
     get_metric_goal_rate()
 
 

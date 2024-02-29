@@ -2,7 +2,7 @@ run:
 	python3 -m penguins_xg
 
 clean:
-	rm -rf data
+	rm -rf data figs
 
 test:
 	pytest
