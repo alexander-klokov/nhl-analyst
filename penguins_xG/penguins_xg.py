@@ -2,7 +2,7 @@ import os
 import pandas as pd
 
 import metrics
-from penguins_xg_config import AXIS_X, AXIS_Y
+from penguins_xg_config import AXIS_Y
 
 from utils.fetch_nhl_data import fetch_nhl_data
 from utils.generate_filename import generate_filename_team, generate_filename_teams_all
@@ -37,6 +37,7 @@ def get_top_n_by_xg():
 
     df_top_n = get_top_n_teams(n, situation=SITUATION, criterion=criterion)
     df_top_n = df_top_n[['team', criterion]]
+    df_top_n.insert(0, 'rank', range(1, n + 1))
 
     plot_table(df_top_n, filename)
 
@@ -48,6 +49,7 @@ def get_top_n_by_goal():
 
     df_top_n = get_top_n_teams(n, situation=SITUATION, criterion=criterion)
     df_top_n = df_top_n[['team', criterion]]
+    df_top_n.insert(0, 'rank', range(1, n + 1))
 
     plot_table(df_top_n, filename)
 
