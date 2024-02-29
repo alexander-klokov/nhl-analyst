@@ -16,7 +16,6 @@ url_teams_all = generate_url_teams_all()
 file_teams_all = generate_filename_teams_all()
 
 SITUATION='5on5'
-NTOP = 32
 
 def init():
 
@@ -58,9 +57,10 @@ def get_metric_goal_rate():
  
     # 'goalRate' - the metric to calculate 
     goal_rates = []
+    n = 32 # for all teams
 
     # get top N teams
-    df_top_n = get_top_n_teams(NTOP, situation=SITUATION, criterion=AXIS_Y)
+    df_top_n = get_top_n_teams(n, situation=SITUATION, criterion=AXIS_Y)
   
     # handle teams
     teams = df_top_n['team'].astype(str).values
