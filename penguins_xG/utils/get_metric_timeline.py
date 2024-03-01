@@ -34,7 +34,7 @@ def get_metric_timeline(teams, filename):
     plt.grid()
     plt.xticks(fontsize=14)
     plt.yticks(fontsize=14)
-    plt.xlabel('Match Sequence', fontsize=18, fontweight='bold')
+    plt.xlabel('Game Sequence', fontsize=18, fontweight='bold')
     plt.ylabel('Scoring Efficiency', fontsize=18, fontweight='bold')
     plt.legend(fontsize='x-large')
    

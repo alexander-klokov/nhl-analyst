@@ -98,10 +98,10 @@ def get_metric_timeline_wildcard():
 
 if __name__ == '__main__':
     init()
-    # get_top_n_by_xg()
-    # get_top_n_by_goal()
-    # get_metric_scoring_efficiency()
+    get_top_n_by_xg()
+    get_top_n_by_goal()
+    get_metric_scoring_efficiency()
     get_metric_timeline_leaders()
-    # get_metric_timeline_wildcard()
+    get_metric_timeline_wildcard()
 
 
