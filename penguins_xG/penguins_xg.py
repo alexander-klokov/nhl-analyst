@@ -87,19 +87,21 @@ def get_metric_scoring_efficiency():
     plot_bar_teams_scoring_efficiency(df_with_scoring_efficiency, filename)
 
 def get_metric_timeline_leaders():
+    filename = 'figs/timeline_leaders.png'
     teams = ['DET', 'VGK', 'VAN', 'PIT']
-    get_metric_timeline(teams)
+    get_metric_timeline(teams, filename)
 
 def get_metric_timeline_wildcard():
+    filename = 'figs/timeline_wildcard.png'
     teams = ['DET', 'TBL', 'WSH', 'NJD', 'PIT']
-    get_metric_timeline(teams)
+    get_metric_timeline(teams, filename)
 
 if __name__ == '__main__':
     init()
     # get_top_n_by_xg()
     # get_top_n_by_goal()
-    get_metric_scoring_efficiency()
-    # get_metric_timeline_leaders()
+    # get_metric_scoring_efficiency()
+    get_metric_timeline_leaders()
     # get_metric_timeline_wildcard()
 
 

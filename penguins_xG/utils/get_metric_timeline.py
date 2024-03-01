@@ -7,7 +7,11 @@ from utils.generate_filename import generate_filename_team
 
 SITUATION='5on5'
 
-def get_metric_timeline(teams):
+def get_metric_timeline(teams, filename):
+
+    plt.rcParams['font.family'] = 'Serif'
+    plt.rcParams["font.weight"] = "bold"
+    plt.rcParams["figure.figsize"] = (15,10)
 
     for team in teams:
 
@@ -25,10 +29,15 @@ def get_metric_timeline(teams):
             rates.append(scoring_efficiency)
 
         game_index = range(len(rates))
-        plt.plot(game_index, rates, label=team)
+        plt.plot(game_index, rates, label=team, linewidth=4)
 
     plt.grid()
-    plt.xlabel('game number')
-    plt.ylabel('goal rate')
-    plt.legend()
+    plt.xticks(fontsize=14)
+    plt.yticks(fontsize=14)
+    plt.xlabel('Match Sequence', fontsize=18, fontweight='bold')
+    plt.ylabel('Scoring Efficiency', fontsize=18, fontweight='bold')
+    plt.legend(fontsize='x-large')
+   
+    # save and display
+    plt.savefig(filename, bbox_inches='tight')
     plt.show()
