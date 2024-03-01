@@ -9,7 +9,7 @@ from utils.generate_filename import generate_filename_team, generate_filename_te
 from utils.generate_url import generate_url_teams_all, generate_url_team
 from utils.get_top_n_teams import get_top_n_teams
 from utils.plot_teams import plot_teams
-from utils.plot_table import plot_table
+from utils.plot_table import plot_table_xg, plot_table_goals
 from utils.get_metric_timeline import get_metric_timeline
 
 url_teams_all = generate_url_teams_all()
@@ -38,7 +38,7 @@ def get_top_n_by_xg():
     df_top_n = df_top_n[['team', criterion]]
     df_top_n.insert(0, 'rank', range(1, n + 1))
 
-    plot_table(df_top_n, filename)
+    plot_table_xg(df_top_n, filename)
 
 def get_top_n_by_goal():
 
@@ -50,7 +50,7 @@ def get_top_n_by_goal():
     df_top_n = df_top_n[['team', criterion]]
     df_top_n.insert(0, 'rank', range(1, n + 1))
 
-    plot_table(df_top_n, filename)
+    plot_table_goals(df_top_n, filename)
 
 
 def get_metric_goal_rate():
