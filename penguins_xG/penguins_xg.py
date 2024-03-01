@@ -2,7 +2,7 @@ import os
 import pandas as pd
 
 import metrics
-from penguins_xg_config import AXIS_Y
+from penguins_xg_config import AXIS_Y, SITUATION
 
 from utils.fetch_nhl_data import fetch_nhl_data
 from utils.generate_filename import generate_filename_team, generate_filename_teams_all
@@ -11,13 +11,13 @@ from utils.get_top_n_teams import get_top_n_teams
 
 from utils.plot_bar import plot_bar_teams_scoring_efficiency
 from utils.plot_table import plot_table_xg, plot_table_goals
+from utils.plot_scatter import plot_scatter
 
 from utils.get_metric_timeline import get_metric_timeline
 
 url_teams_all = generate_url_teams_all()
 file_teams_all = generate_filename_teams_all()
 
-SITUATION='5on5'
 
 def init():
 
@@ -96,11 +96,24 @@ def get_metric_timeline_wildcard():
     teams = ['DET', 'TBL', 'WSH', 'NJD', 'PIT']
     get_metric_timeline(teams, filename)
 
+def get_centroid():
+    teams = ['PIT', 'VAN']
+
+    for team in teams:
+        filename_team = generate_filename_team(team)
+        filename = f'figs/scatter_{team}.png'.lower()
+
+        df = pd.read_csv(filename_team)
+        df = df[(df['season'] >= 2023) & (df['situation'] == SITUATION)]
+
+        plot_scatter(df, filename, team)
+
 if __name__ == '__main__':
     init()
     get_top_n_by_xg()
     get_top_n_by_goal()
     get_metric_scoring_efficiency()
+    get_centroid()
     get_metric_timeline_leaders()
     get_metric_timeline_wildcard()
 

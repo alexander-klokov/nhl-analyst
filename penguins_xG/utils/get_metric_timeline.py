@@ -3,9 +3,8 @@ import pandas as pd
 
 import metrics
 
+from penguins_xg_config import SITUATION
 from utils.generate_filename import generate_filename_team
-
-SITUATION='5on5'
 
 def get_metric_timeline(teams, filename):
 
