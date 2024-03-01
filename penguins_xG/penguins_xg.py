@@ -45,7 +45,7 @@ def get_top_n_by_xg():
 
     criterion = 'xGoalsFor'
     filename = 'figs/top_n_by_xg.png'
-    n = 8
+    n = 32
 
     df_top_n = get_top_n_teams(n, situation=SITUATION, criterion=criterion)
     df_top_n = df_top_n[['team', criterion]]
@@ -106,7 +106,7 @@ def get_metric_timeline_wildcard():
     get_metric_timeline(teams, filename)
 
 def get_centroid():
-    teams = ['PIT', 'VAN']
+    teams = ['PIT', 'COL', 'DET']
 
     for team in teams:
         filename_team = generate_filename_team(team)
