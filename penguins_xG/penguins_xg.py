@@ -30,6 +30,17 @@ def init():
     # fetch teams stats
     fetch_nhl_data(url_teams_all, file_teams_all)
 
+    df = pd.read_csv(file_teams_all)
+    df = df.drop_duplicates(subset=['team'])
+
+    teams = df['team'].astype(str).values
+    for team in teams:
+        url_team = generate_url_team(team)
+        filename_team = generate_filename_team(team)
+
+        fetch_nhl_data(url_team, filename_team)
+
+
 def get_top_n_by_xg():
 
     criterion = 'xGoalsFor'
@@ -41,6 +52,7 @@ def get_top_n_by_xg():
     df_top_n.insert(0, 'rank', range(1, n + 1))
 
     plot_table_xg(df_top_n, filename)
+    
 
 def get_top_n_by_goal():
 
@@ -57,7 +69,7 @@ def get_top_n_by_goal():
 
 def get_metric_scoring_efficiency():
  
-    # 'scoringEff' - the metric to calculate 
+    # 'scoring efficiency' - the metric to calculate 
     scoring_efficiency_all = []
     n = 32 # for all teams
 
@@ -67,10 +79,7 @@ def get_metric_scoring_efficiency():
     # handle teams
     teams = df_top_n['team'].astype(str).values
     for team in teams:
-        url_team = generate_url_team(team)
         filename_team = generate_filename_team(team)
-
-        fetch_nhl_data(url_team, filename_team)
 
         df = pd.read_csv(filename_team)
         df = df[(df['season'] >= 2023) & (df['situation'] == SITUATION)]
