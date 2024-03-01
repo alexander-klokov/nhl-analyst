@@ -15,8 +15,14 @@ data_10 = {
     AXIS_Y: [2, 4, 2, 5],
 }
 
+data_line = {
+    AXIS_X: [1, 2, 3, 4, 5],
+    AXIS_Y: [1, 2, 3, 4, 5],
+}
+
 df_05 = pd.DataFrame(data_05)
 df_10 = pd.DataFrame(data_10)
+df_line = pd.DataFrame(data_line)
 
 
 def test_scoring_efficiency_05():
@@ -24,3 +30,6 @@ def test_scoring_efficiency_05():
 
 def test_scoring_efficiency_10():
     assert metrics.scoring_efficiency(df_10) == 1.0
+
+def test_centroid():
+    assert metrics.centroid(df_line) == (3, 3)
