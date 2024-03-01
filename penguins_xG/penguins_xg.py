@@ -8,8 +8,10 @@ from utils.fetch_nhl_data import fetch_nhl_data
 from utils.generate_filename import generate_filename_team, generate_filename_teams_all
 from utils.generate_url import generate_url_teams_all, generate_url_team
 from utils.get_top_n_teams import get_top_n_teams
-from utils.plot_teams import plot_teams
+
+from utils.plot_bar import plot_bar_teams_scoring_efficiency
 from utils.plot_table import plot_table_xg, plot_table_goals
+
 from utils.get_metric_timeline import get_metric_timeline
 
 url_teams_all = generate_url_teams_all()
@@ -53,10 +55,10 @@ def get_top_n_by_goal():
     plot_table_goals(df_top_n, filename)
 
 
-def get_metric_goal_rate():
+def get_metric_scoring_efficiency():
  
-    # 'goalRate' - the metric to calculate 
-    goal_rates = []
+    # 'scoringEff' - the metric to calculate 
+    scoring_efficiency_all = []
     n = 32 # for all teams
 
     # get top N teams
@@ -73,15 +75,16 @@ def get_metric_goal_rate():
         df = pd.read_csv(filename_team)
         df = df[(df['season'] >= 2023) & (df['situation'] == SITUATION)]
 
-        goal_rate = metrics.get_goal_rate(df)
+        scoring_efficiency = metrics.scoring_efficiency(df)
 
-        goal_rates.append(goal_rate)
+        scoring_efficiency_all.append(scoring_efficiency)
 
     # 
-    df_top_n['goalRate'] = goal_rates
-    df_with_goal_rate = df_top_n.sort_values(by='goalRate', ascending=False)
+    df_top_n['scoringEff'] = scoring_efficiency_all
+    df_with_scoring_efficiency = df_top_n.sort_values(by='scoringEff', ascending=False)
 
-    plot_teams(df_with_goal_rate)
+    filename = 'figs/teams_scoring_efficiency.png'
+    plot_bar_teams_scoring_efficiency(df_with_scoring_efficiency, filename)
 
 def get_metric_timeline_leaders():
     teams = ['DET', 'VGK', 'VAN', 'PIT']
@@ -93,10 +96,10 @@ def get_metric_timeline_wildcard():
 
 if __name__ == '__main__':
     init()
-    get_top_n_by_xg()
-    get_top_n_by_goal()
-    get_metric_goal_rate()
-    get_metric_timeline_leaders()
-    get_metric_timeline_wildcard()
+    # get_top_n_by_xg()
+    # get_top_n_by_goal()
+    get_metric_scoring_efficiency()
+    # get_metric_timeline_leaders()
+    # get_metric_timeline_wildcard()
 
 

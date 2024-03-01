@@ -19,8 +19,8 @@ df_05 = pd.DataFrame(data_05)
 df_10 = pd.DataFrame(data_10)
 
 
-def test_goal_rate_05():
-    assert metrics.get_goal_rate(df_05) == 0.5
+def test_scoring_efficiency_05():
+    assert metrics.scoring_efficiency(df_05) == 0.5
 
-def test_goal_rate_10():
-    assert metrics.get_goal_rate(df_10) == 1.0
+def test_scoring_efficiency_10():
+    assert metrics.scoring_efficiency(df_10) == 1.0

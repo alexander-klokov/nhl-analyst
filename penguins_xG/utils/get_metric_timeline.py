@@ -20,9 +20,9 @@ def get_metric_timeline(teams):
 
         for i in range(1, len(df) + 1):
             df_window = df[0:i]
-            goal_rate = metrics.get_goal_rate(df_window)
+            scoring_efficiency = metrics.scoring_efficiency(df_window)
 
-            rates.append(goal_rate)
+            rates.append(scoring_efficiency)
 
         game_index = range(len(rates))
         plt.plot(game_index, rates, label=team)
