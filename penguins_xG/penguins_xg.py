@@ -5,6 +5,8 @@ import metrics
 from penguins_xg_config import AXIS_Y, SITUATION
 
 from utils.fetch_nhl_data import fetch_nhl_data
+from utils.slice_df_for_analysis import slice_df_for_analysis
+
 from utils.generate_filename import generate_filename_team, generate_filename_teams_all
 from utils.generate_url import generate_url_teams_all, generate_url_team
 from utils.get_top_n_teams import get_top_n_teams
@@ -82,7 +84,7 @@ def get_metric_scoring_efficiency():
         filename_team = generate_filename_team(team)
 
         df = pd.read_csv(filename_team)
-        df = df[(df['season'] >= 2023) & (df['situation'] == SITUATION)]
+        df = slice_df_for_analysis(df)
 
         scoring_efficiency = metrics.scoring_efficiency(df)
 
@@ -102,7 +104,7 @@ def get_metric_timeline_leaders():
 
 def get_metric_timeline_wildcard():
     filename = 'figs/timeline_wildcard.png'
-    teams = ['DET', 'TBL', 'WSH', 'NJD', 'PIT']
+    teams = ['DET', 'TBL', 'WSH', 'NYI', 'NJD', 'PIT']
     get_metric_timeline(teams, filename)
 
 def get_centroid():
@@ -113,9 +115,14 @@ def get_centroid():
         filename = f'figs/scatter_{team}.png'.lower()
 
         df = pd.read_csv(filename_team)
-        df = df[(df['season'] >= 2023) & (df['situation'] == SITUATION)]
+        df = slice_df_for_analysis(df)
 
-        plot_scatter(df, filename, team)
+        plot_scatter(df, filename, team, True)
+
+        if team == 'PIT':
+            filename_scatter = f'figs/scatter1_{team}.png'.lower()
+            plot_scatter(df, filename_scatter, team, False)
+
 
 if __name__ == '__main__':
     init()

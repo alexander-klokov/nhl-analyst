@@ -3,7 +3,7 @@ import pandas as pd
 
 import metrics
 
-from penguins_xg_config import SITUATION
+from utils.slice_df_for_analysis import slice_df_for_analysis
 from utils.generate_filename import generate_filename_team
 
 def get_metric_timeline(teams, filename):
@@ -17,7 +17,7 @@ def get_metric_timeline(teams, filename):
         filename_team = generate_filename_team(team)
 
         df = pd.read_csv(filename_team)
-        df = df[(df['season'] >= 2023) & (df['situation'] == SITUATION)]
+        df = slice_df_for_analysis(df)
 
         rates = []
 
