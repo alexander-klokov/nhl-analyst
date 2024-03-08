@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
-import metrics
+import penguins_xg_metrics
 
 from utils.slice_df_for_analysis import slice_df_for_analysis
 from utils.generate_filename import generate_filename_team
@@ -23,7 +23,7 @@ def get_metric_timeline(teams, filename):
 
         for i in range(1, len(df) + 1):
             df_window = df[0:i]
-            scoring_efficiency = metrics.scoring_efficiency(df_window)
+            scoring_efficiency = penguins_xg_metrics.scoring_efficiency(df_window)
 
             rates.append(scoring_efficiency)
 

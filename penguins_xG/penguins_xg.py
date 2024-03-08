@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-import metrics
+import penguins_xg_metrics
 from penguins_xg_config import AXIS_Y, SITUATION
 
 from utils.fetch_nhl_data import fetch_nhl_data
@@ -86,7 +86,7 @@ def get_metric_scoring_efficiency():
         df = pd.read_csv(filename_team)
         df = slice_df_for_analysis(df)
 
-        scoring_efficiency = metrics.scoring_efficiency(df)
+        scoring_efficiency = penguins_xg_metrics.scoring_efficiency(df)
 
         scoring_efficiency_all.append(scoring_efficiency)
 

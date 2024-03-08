@@ -1,6 +1,6 @@
 import pandas as pd
 
-import metrics
+import penguins_xg_metrics
 from penguins_xg_config import AXIS_X, AXIS_Y
 
 # goal rate 0.5
@@ -26,10 +26,10 @@ df_line = pd.DataFrame(data_line)
 
 
 def test_scoring_efficiency_05():
-    assert metrics.scoring_efficiency(df_05) == 0.5
+    assert penguins_xg_metrics.scoring_efficiency(df_05) == 0.5
 
 def test_scoring_efficiency_10():
-    assert metrics.scoring_efficiency(df_10) == 1.0
+    assert penguins_xg_metrics.scoring_efficiency(df_10) == 1.0
 
 def test_centroid():
-    assert metrics.centroid(df_line) == (3, 3)
+    assert penguins_xg_metrics.centroid(df_line) == (3, 3)

@@ -7,7 +7,7 @@ def plot_scatter(df, filename, title='', is_kde=False):
     plt.rcParams["font.weight"] = "bold"
     plt.rcParams["figure.figsize"] = (10,10)
 
-    sns.scatterplot(data=df, x='xGoalsFor', y='goalsFor', palette='viridis', s=196, alpha=0.9)
+    sns.scatterplot(data=df, x='xGoalsFor', y='goalsFor', s=196, alpha=0.9)
     
     if is_kde:
         sns.kdeplot(data=df, x='xGoalsFor', y='goalsFor', cmap='viridis', fill=True, thresh=0, levels=10)
